@@ -1,1 +1,19 @@
-spring.application.name=busanzip
+spring:
+  application:
+    name: busanzip
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/busanzip_dev
+    username: root
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+baseurl:
+  restaurant: http://apis.data.go.kr/6260000/FoodService/getFoodKr?
+
+serviceKey:
+  restaurant: ${RESTAURANT_SERVICEKEY}

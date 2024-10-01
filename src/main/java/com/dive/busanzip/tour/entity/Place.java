@@ -16,9 +16,9 @@ public class Place {
     private Double latitude;
     private Double longitude;
     // TODO : 데이터 타입 결정
-    private ?? usageDay;
-    private ?? holiday;
-    private ?? usageTime;
+//    private ?? usageDay;
+//    private ?? holiday;
+//    private ?? usageTime;
     private String imageURL;
     private String usageAmount;
     private String contact;

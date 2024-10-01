@@ -10,7 +10,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ApiService {
+public class TourService {
 
     // TODO : 모듈별 분리
     public Course getcourse(CourseInfo courseInfo) {
@@ -75,11 +75,15 @@ public class ApiService {
         /*
         5. 타입별 상세 정보 반환
          */
+
+        return null;
     }
 
     private CandidateInfo[] filterBy(Integer[] section, TravelType travelType) {
         // TODO : 공공 데이터 미리 저장
         // 섹션, 타입에 해당하는 데이터 읽어서 반환
+
+        return null;
     }
 
 
