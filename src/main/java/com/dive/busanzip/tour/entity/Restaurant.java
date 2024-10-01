@@ -27,7 +27,6 @@ public class Restaurant {
     public String thumbnailUrl;
     public String homePageUrl;
     public String representativeMenu;
-    public LocalTime startTime;
-    public LocalTime endTime;
+    public String usageTime;
 
 }

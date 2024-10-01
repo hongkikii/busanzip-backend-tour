@@ -2,61 +2,80 @@ package com.dive.busanzip.tour.dto;
 
 import com.dive.busanzip.tour.entity.Restaurant;
 import com.dive.busanzip.tour.entity.TravelType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import lombok.Getter;
 
+@Getter
 public class RestaurantData {
-    private String UC_SEQ;
+    @JsonProperty("UC_SEQ")
+    private Integer UC_SEQ;
+
+    @JsonProperty("MAIN_TITLE")
     private String MAIN_TITLE;
+
+    @JsonProperty("GUGUN_NM")
     private String GUGUN_NM;
+
+    @JsonProperty("LAT")
     private String LAT;
+
+    @JsonProperty("LNG")
     private String LNG;
+
+    @JsonProperty("PLACE")
     private String PLACE;
+
+    @JsonProperty("TITLE")
     private String TITLE;
+
+    @JsonProperty("SUBTITLE")
     private String SUBTITLE;
-    private String ADD1;
-    private String ADD2;
+
+    @JsonProperty("ADDR1")
+    private String ADDR1;
+
+    @JsonProperty("ADDR2")
+    private String ADDR2;
+
+    @JsonProperty("CNTCT_TEL")
     private String CNTCT_TEL;
+
+    @JsonProperty("HOMEPAGE_URL")
     private String HOMEPAGE_URL;
+
+    @JsonProperty("USAGE_DAY_WEEK_AND_TIME")
     private String USAGE_DAY_WEEK_AND_TIME;
+
+    @JsonProperty("RPRSNTV_MENU")
     private String RPRSNTV_MENU;
+
+    @JsonProperty("MAIN_IMG_NORMAL")
     private String MAIN_IMG_NORMAL;
+
+    @JsonProperty("MAIN_IMG_THUMB")
     private String MAIN_IMG_THUMB;
+
+    @JsonProperty("ITEMCNTNTS")
     private String ITEMCNTNTS;
 
     public Restaurant toEntity() {
-
-        LocalTime[] usageTimes = getUsageTime(USAGE_DAY_WEEK_AND_TIME);
-
         return Restaurant.builder()
                 .id(Long.valueOf(UC_SEQ))
                 .travelType(TravelType.RESTAURANT)
                 .name(MAIN_TITLE)
-                .address(ADD1)
+                .address(ADDR1)
                 .phoneNumber(CNTCT_TEL)
                 .details(ITEMCNTNTS)
                 .latitude(Double.valueOf(LAT))
                 .longitude(Double.valueOf(LNG))
+                .homePageUrl(HOMEPAGE_URL)
                 .imageUrl(MAIN_IMG_NORMAL)
                 .thumbnailUrl(MAIN_IMG_THUMB)
                 .representativeMenu(RPRSNTV_MENU)
-                .startTime(usageTimes[0])
-                .endTime(usageTimes[1])
+                .usageTime(USAGE_DAY_WEEK_AND_TIME)
                 .build();
-    }
-
-    private LocalTime[] getUsageTime(String usageTimeStr) {
-        LocalTime[] result = new LocalTime[2];
-        String[] times = usageTimeStr.split("~");
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma", Locale.ENGLISH);
-
-        LocalTime startTime = LocalTime.parse(times[0].replace(".", "").toUpperCase(), formatter);
-        LocalTime endTime = LocalTime.parse(times[1].replace(".", "").toUpperCase(), formatter);
-        result[0] = startTime;
-        result[1] = endTime;
-
-        return result;
     }
 }
