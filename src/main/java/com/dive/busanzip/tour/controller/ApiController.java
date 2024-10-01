@@ -1,6 +1,6 @@
 package com.dive.busanzip.tour.controller;
 
-import com.dive.busanzip.tour.service.RestaurantService;
+import com.dive.busanzip.tour.service.ApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,11 +10,29 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ApiController {
 
-    private final RestaurantService restaurantService;
+    private final ApiService apiService;
 
     @PostMapping("/api/restaurant")
     public HttpStatus saveRestaurantData() {
-        restaurantService.save();
+        apiService.saveRestaurant();
+        return HttpStatus.OK;
+    }
+
+    @PostMapping("/api/tourist-attraction")
+    public HttpStatus saveTouristAttractionData() {
+        apiService.saveTouristAttraction();
+        return HttpStatus.OK;
+    }
+
+    @PostMapping("/api/shopping")
+    public HttpStatus saveShoppingData() {
+        apiService.saveShopping();
+        return HttpStatus.OK;
+    }
+
+    @PostMapping("/api/experience")
+    public HttpStatus saveExperienceData() {
+        apiService.saveExperience();
         return HttpStatus.OK;
     }
 }

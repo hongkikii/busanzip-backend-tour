@@ -1,9 +1,9 @@
 package com.dive.busanzip.tour.service;
 
-import com.dive.busanzip.tour.dto.Candidate;
-import com.dive.busanzip.tour.dto.CandidateInfo;
-import com.dive.busanzip.tour.dto.Course;
-import com.dive.busanzip.tour.dto.CourseInfo;
+import com.dive.busanzip.tour.dto.tour.Candidate;
+import com.dive.busanzip.tour.dto.tour.CandidateInfo;
+import com.dive.busanzip.tour.dto.tour.Course;
+import com.dive.busanzip.tour.dto.tour.CourseInfo;
 import com.dive.busanzip.tour.entity.TravelType;
 import java.util.ArrayList;
 import java.util.List;

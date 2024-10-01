@@ -1,4 +1,4 @@
-package com.dive.busanzip.tour.dto;
+package com.dive.busanzip.tour.dto.api;
 
 import lombok.Getter;
 

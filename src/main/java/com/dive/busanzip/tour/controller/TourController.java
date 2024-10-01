@@ -1,7 +1,7 @@
 package com.dive.busanzip.tour.controller;
 
-import com.dive.busanzip.tour.dto.Course;
-import com.dive.busanzip.tour.dto.CourseInfo;
+import com.dive.busanzip.tour.dto.tour.Course;
+import com.dive.busanzip.tour.dto.tour.CourseInfo;
 import com.dive.busanzip.tour.service.TourService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

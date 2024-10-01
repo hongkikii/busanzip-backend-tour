@@ -10,10 +10,10 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
-baseurl:
-  restaurant: http://apis.data.go.kr/6260000/FoodService/getFoodKr?
-
-serviceKey:
-  restaurant: ${RESTAURANT_SERVICEKEY}
+#baseurl:
+#  restaurant: http://apis.data.go.kr/6260000/FoodService/getFoodKr?
+#  tourist-attraction: http://apis.data.go.kr/6260000/AttractionService/getAttractionKr?
+#
+#serviceKey: ${DATA_SERVICEKEY}

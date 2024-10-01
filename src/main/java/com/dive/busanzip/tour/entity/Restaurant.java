@@ -19,7 +19,7 @@ public class Restaurant {
     public TravelType travelType;
     public String name;
     public String address;
-    public String phoneNumber;
+    public String phone;
     public String details;
     public Double latitude;
     public Double longitude;
