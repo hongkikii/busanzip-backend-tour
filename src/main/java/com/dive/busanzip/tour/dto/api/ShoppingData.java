@@ -1,12 +1,12 @@
 package com.dive.busanzip.tour.dto.api;
 
-import com.dive.busanzip.tour.entity.TouristAttraction;
+import com.dive.busanzip.tour.entity.Shopping;
 import com.dive.busanzip.tour.entity.TravelType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 @Getter
-public class TouristAttractionData {
+public class ShoppingData {
     @JsonProperty("UC_SEQ")
     private Integer UC_SEQ;
 
@@ -31,8 +31,14 @@ public class TouristAttractionData {
     @JsonProperty("SUBTITLE")
     private String SUBTITLE;
 
+    @JsonProperty("MAIN_PLACE")
+    private String MAIN_PLACE;
+
     @JsonProperty("ADDR1")
     private String ADDR1;
+
+    @JsonProperty("ADDR2")
+    private String ADDR2;
 
     @JsonProperty("CNTCT_TEL")
     private String CNTCT_TEL;
@@ -67,25 +73,23 @@ public class TouristAttractionData {
     @JsonProperty("ITEMCNTNTS")
     private String ITEMCNTNTS;
 
-    public TouristAttraction toEntity() {
-        return TouristAttraction.builder()
+    public Shopping toEntity() {
+        return Shopping.builder()
                 .id(Long.valueOf(UC_SEQ))
-                .travelType(TravelType.TOURIST_ATTRACTION)
-                .name(MAIN_TITLE)
+                .travelType(TravelType.SHOPPING)
+                .name(PLACE)
                 .latitude(Double.valueOf(LAT))
                 .longitude(Double.valueOf(LNG))
-                .title(TITLE)
-                .subTitle(SUBTITLE)
                 .address(ADDR1)
                 .phone(CNTCT_TEL)
-                .imageUrl(MAIN_IMG_NORMAL)
-                .thumbnailUrl(MAIN_IMG_THUMB)
                 .homePageUrl(HOMEPAGE_URL)
-                .usageTime(USAGE_DAY_WEEK_AND_TIME)
                 .usageDay(USAGE_DAY)
                 .holidayInfo(HLDY_INFO)
+                .usageTime(USAGE_DAY_WEEK_AND_TIME)
                 .usagePrice(USAGE_AMOUNT)
                 .amenities(MIDDLE_SIZE_RM1)
+                .imageUrl(MAIN_IMG_NORMAL)
+                .thumbnailUrl(MAIN_IMG_THUMB)
                 .details(ITEMCNTNTS)
                 .build();
     }
