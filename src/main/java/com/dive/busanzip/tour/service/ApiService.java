@@ -1,11 +1,14 @@
 package com.dive.busanzip.tour.service;
 
+import com.dive.busanzip.tour.dto.api.ExperienceData;
+import com.dive.busanzip.tour.dto.api.ExperienceReponse;
 import com.dive.busanzip.tour.dto.api.RestaurantResponse;
 import com.dive.busanzip.tour.dto.api.RestaurantData;
 import com.dive.busanzip.tour.dto.api.ShoppingData;
 import com.dive.busanzip.tour.dto.api.TouristAttractionData;
 import com.dive.busanzip.tour.dto.api.TouristAttractionResponse;
 import com.dive.busanzip.tour.entity.ShoppingResponse;
+import com.dive.busanzip.tour.repository.ExperienceRepository;
 import com.dive.busanzip.tour.repository.RestaurantRepository;
 import com.dive.busanzip.tour.repository.ShoppingRepository;
 import com.dive.busanzip.tour.repository.TouristAttractionRepository;
@@ -26,6 +29,7 @@ public class ApiService {
     private final RestaurantRepository restaurantRepository;
     private final TouristAttractionRepository touristAttractionRepository;
     private final ShoppingRepository shoppingRepository;
+    private final ExperienceRepository experienceRepository;
     private final ResourceLoader resourceLoader;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -77,10 +81,10 @@ public class ApiService {
     public void saveExperience() {
         Resource resource = resourceLoader.getResource("classpath:experience.json");
         try {
-            RestaurantResponse response = objectMapper.readValue(resource.getInputStream(), RestaurantResponse.class);
-            RestaurantData[] restaurantArray = response.getItem();
-            for(RestaurantData restaurantData: restaurantArray) {
-                restaurantRepository.save(restaurantData.toEntity());
+            ExperienceReponse response = objectMapper.readValue(resource.getInputStream(), ExperienceReponse.class);
+            ExperienceData[] experienceArray = response.getItem();
+            for(ExperienceData experienceData: experienceArray) {
+                experienceRepository.save(experienceData.toEntity());
             }
         } catch (IOException e) {
             log.error("Error loading experience: {}", e.getMessage());
