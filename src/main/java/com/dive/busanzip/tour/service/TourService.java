@@ -80,7 +80,6 @@ public class TourService {
     }
 
     private CandidateInfo[] filterBy(Integer[] section, TravelType travelType) {
-        // TODO : 공공 데이터 미리 저장
         // 섹션, 타입에 해당하는 데이터 읽어서 반환
 
         return null;

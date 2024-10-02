@@ -10,7 +10,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
 #baseurl:
 #  restaurant: http://apis.data.go.kr/6260000/FoodService/getFoodKr?

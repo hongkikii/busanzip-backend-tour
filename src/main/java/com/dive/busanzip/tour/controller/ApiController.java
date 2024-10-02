@@ -35,4 +35,10 @@ public class ApiController {
         apiService.saveExperience();
         return HttpStatus.OK;
     }
+
+    @PostMapping("/api/accommodation")
+    public HttpStatus saveAccommodationData() {
+        apiService.saveAccommodation();
+        return HttpStatus.OK;
+    }
 }

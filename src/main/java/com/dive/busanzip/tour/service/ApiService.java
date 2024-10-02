@@ -7,15 +7,24 @@ import com.dive.busanzip.tour.dto.api.RestaurantData;
 import com.dive.busanzip.tour.dto.api.ShoppingData;
 import com.dive.busanzip.tour.dto.api.TouristAttractionData;
 import com.dive.busanzip.tour.dto.api.TouristAttractionResponse;
+import com.dive.busanzip.tour.entity.Accommodation;
 import com.dive.busanzip.tour.entity.ShoppingResponse;
+import com.dive.busanzip.tour.repository.AccommodationRepository;
 import com.dive.busanzip.tour.repository.ExperienceRepository;
 import com.dive.busanzip.tour.repository.RestaurantRepository;
 import com.dive.busanzip.tour.repository.ShoppingRepository;
 import com.dive.busanzip.tour.repository.TouristAttractionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.opencsv.CSVReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
@@ -32,6 +41,7 @@ public class ApiService {
     private final ExperienceRepository experienceRepository;
     private final ResourceLoader resourceLoader;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final AccommodationRepository accommodationRepository;
 
     // TODO: 외부 api 호출해서 정기 추출
     @Transactional
@@ -88,6 +98,52 @@ public class ApiService {
             }
         } catch (IOException e) {
             log.error("Error loading experience: {}", e.getMessage());
+        }
+    }
+
+    // TODO : 필요없는 컬럼 제거
+    @Transactional
+    public void saveAccommodation() {
+        ClassPathResource resource = new ClassPathResource("accommodation.csv");
+        try {
+            CSVReader reader = new CSVReader(new InputStreamReader(resource.getInputStream(), Charset.forName("EUC-KR")));
+            List<String[]> csvData = reader.readAll();
+
+            for(int i=1; i<csvData.size(); i++) {
+                String[] row = csvData.get(i);
+                Accommodation accommodation = Accommodation.create(
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        row[5],
+                        row[6],
+                        row[7],
+                        row[8],
+                        row[9],
+                        row[10],
+                        row[11],
+                        row[12],
+                        Double.parseDouble(row[13].replaceAll("^\"|\"$", "")),
+                        Double.parseDouble(row[14].replaceAll("^\"|\"$", "")),
+                        "Y".equals(row[15]),
+                        row[16],
+                        row[17],
+                        "Y".equals(row[18]),
+                        "Y".equals(row[19]),
+                        row[20],
+                        "Y".equals(row[21]),
+                        "Y".equals(row[22]),
+                        "Y".equals(row[23]),
+                        "Y".equals(row[24]),
+                        "Y".equals(row[25]),
+                        LocalDate.parse(row[26])
+                );
+                accommodationRepository.save(accommodation);
+            }
+        } catch (Exception e) {
+            log.error("Error loading accommodation: {}", e.getMessage());
         }
     }
 }

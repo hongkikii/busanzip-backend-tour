@@ -2,6 +2,7 @@ package com.dive.busanzip.tour.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,11 +27,13 @@ public class TouristAttraction {
     private String imageUrl;
     private String thumbnailUrl;
     private String homePageUrl;
+    @Lob
     private String usageTime;
     private String usageDay;
     private String holidayInfo;
     private String usagePrice;
     private String amenities;
+    @Lob
     private String details;
 
 }
