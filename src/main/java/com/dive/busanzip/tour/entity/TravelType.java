@@ -10,7 +10,8 @@ public enum TravelType {
     RESTAURANT("restaurant"),
     TOURIST_ATTRACTION("tourist_attraction"),
     SHOPPING("shopping"),
-    EXPERIENCE("experience");
+    EXPERIENCE("experience"),
+    ACCOMMODATION("accommodation");
 
     private String travelTypeStr;
 }
