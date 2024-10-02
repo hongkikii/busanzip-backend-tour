@@ -2,6 +2,7 @@ package com.dive.busanzip.tour.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import java.time.LocalTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,18 +16,20 @@ import lombok.NoArgsConstructor;
 public class Restaurant {
 
     @Id
-    public Long id;
-    public TravelType travelType;
-    public String name;
-    public String address;
-    public String phone;
-    public String details;
-    public Double latitude;
-    public Double longitude;
-    public String imageUrl;
-    public String thumbnailUrl;
-    public String homePageUrl;
-    public String representativeMenu;
-    public String usageTime;
+    private Long id;
+    private TravelType travelType;
+    private String name;
+    private String address;
+    private String phone;
+    @Lob
+    private String details;
+    private Double latitude;
+    private Double longitude;
+    private String imageUrl;
+    private String thumbnailUrl;
+    private String homePageUrl;
+    private String representativeMenu;
+    @Lob
+    private String usageTime;
 
 }
