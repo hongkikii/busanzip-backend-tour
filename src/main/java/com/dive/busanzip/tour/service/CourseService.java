@@ -5,6 +5,11 @@ import com.dive.busanzip.tour.dto.course.CarRouteResponse.Route.Traoptimal;
 import com.dive.busanzip.tour.dto.course.CourseResponse;
 import com.dive.busanzip.tour.dto.course.CourseRequest;
 import com.dive.busanzip.tour.dto.course.Place;
+import com.dive.busanzip.tour.dto.course.TransitRouteRequest;
+import com.dive.busanzip.tour.dto.course.TransitRouteRequest.LatLng;
+import com.dive.busanzip.tour.dto.course.TransitRouteRequest.Location;
+import com.dive.busanzip.tour.dto.course.TransitRouteRequest.Point;
+import com.dive.busanzip.tour.dto.course.TransitRouteResponse;
 import com.dive.busanzip.tour.entity.Accommodation;
 import com.dive.busanzip.tour.entity.TravelType;
 import com.dive.busanzip.tour.repository.AccommodationRepository;
@@ -33,10 +38,14 @@ public class CourseService {
 
     private final RestTemplate restTemplate;
     private static final String CAR_ROUTE_API_URL = "https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving";
+    private static final String TRANSIT_ROUTE_API_URL = "https://routes.googleapis.com/directions/v2:computeRoutes";
     @Value("${api.route.car.key-id}")
     private String CAR_ROUTE_API_KEY_ID;
     @Value("${api.route.car.key}")
     private String CAR_ROUTE_API_KEY;
+    @Value("${api.route.transit.key}")
+    private String TRANSIT_API_KEY;
+
 
     private final RestaurantRepository restaurantRepository;
     private final ShoppingRepository shoppingRepository;
@@ -226,8 +235,34 @@ public class CourseService {
             return (int) (durationMilSec / 60000);
         }
         else {
+            String fieldMask = "routes.legs.duration";
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("X-Goog-Api-Key", TRANSIT_API_KEY);
+            headers.set("X-Goog-FieldMask", fieldMask);
 
+            LatLng startLatLng = new LatLng(startLat, startLng);
+            LatLng endLatLng = new LatLng(endLat, endLng);
+            Location startLocation = new Location(startLatLng);
+            Location endLocation = new Location(endLatLng);
+
+            Point origin = new Point(startLocation);
+            Point destination = new Point(endLocation);
+
+            TransitRouteRequest requestBody = new TransitRouteRequest(origin, destination, "2024-10-06T10:00:00Z",
+                    "TRANSIT", "en-US", "IMPERIAL");
+
+            HttpEntity<TransitRouteRequest> entity = new HttpEntity<>(requestBody, headers);
+
+            ResponseEntity<TransitRouteResponse> response = restTemplate.exchange(TRANSIT_ROUTE_API_URL,
+                    HttpMethod.POST, entity, TransitRouteResponse.class);
+
+            String duration = response.getBody()
+                    .getRoutes().get(0)
+                    .getLegs().get(0)
+                    .getDuration();
+
+            int sec = Integer.parseInt(duration.replace("s", ""));
+            return sec / 60;
         }
-        return 30;
     }
 }

@@ -17,6 +17,8 @@ api:
     car:
       key-id: ${CAR_ROUTE_API_KEY_ID}
       key: ${CAR_ROUTE_API_KEY}
+    transit:
+      key: ${TRANSIT_ROUTE_API_KEY}
 
 #baseurl:
 #  restaurant: http://apis.data.go.kr/6260000/FoodService/getFoodKr?
