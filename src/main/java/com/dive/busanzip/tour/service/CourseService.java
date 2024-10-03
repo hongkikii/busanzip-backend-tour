@@ -3,6 +3,7 @@ package com.dive.busanzip.tour.service;
 import com.dive.busanzip.tour.dto.course.CourseResponse;
 import com.dive.busanzip.tour.dto.course.CourseRequest;
 import com.dive.busanzip.tour.dto.course.Place;
+import com.dive.busanzip.tour.entity.Accommodation;
 import com.dive.busanzip.tour.entity.TravelType;
 import com.dive.busanzip.tour.repository.AccommodationRepository;
 import com.dive.busanzip.tour.repository.ExperienceRepository;
@@ -12,6 +13,7 @@ import com.dive.busanzip.tour.repository.TouristAttractionRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,8 +33,8 @@ public class CourseService {
         Map<Integer, Long> shoppingScore = null;
         Map<Integer, Long> touristAttractionScore = null;
         Map<Integer, Long> experienceScore = null;
-        Map<Integer, Long> accommodationScore = null;
 
+        // TODO : 요구사항 빈 경우, 요청 X
         if(request.getEatingCount() > 0) {
             restaurantScore = calculateScore(request.getEatingRequirements(), TravelType.RESTAURANT);
         }
@@ -44,9 +46,6 @@ public class CourseService {
         }
         if(request.getExperienceCount() > 0) {
             experienceScore = calculateScore(request.getExperienceRequirements(), TravelType.EXPERIENCE);
-        }
-        if(request.getAccommodationCount() > 0) {
-            accommodationScore = calculateScore(request.getAccommodationRequirements(), TravelType.ACCOMMODATION);
         }
 
         String[] sequence = request.getSequence();
@@ -70,7 +69,7 @@ public class CourseService {
                     lastPlace = addPlacesToCourse(placeList, experienceScore, lastPlace, TravelType.EXPERIENCE, maxMoveMin, isUsingCar);
                     break;
                 case "ACCOMMODATION":
-                    lastPlace = addPlacesToCourse(placeList, accommodationScore, lastPlace, TravelType.ACCOMMODATION, maxMoveMin, isUsingCar);
+                    lastPlace = addAccommodationToCourse(placeList, lastPlace, request);
                     break;
             }
         }
@@ -108,13 +107,6 @@ public class CourseService {
             score.put(4, 140L);
             score.put(5, 336L);
         }
-        if(travelType == TravelType.ACCOMMODATION) {
-            score.put(1, 1L);
-            score.put(2, 2L);
-            score.put(3, 3L);
-            score.put(4, 4L);
-            score.put(5, 5L);
-        }
         return score;
     }
 
@@ -139,6 +131,43 @@ public class CourseService {
             }
         }
         throw new IllegalArgumentException();
+    }
+
+    private Place addAccommodationToCourse(List<Place> placeList, Place lastPlace, CourseRequest request) {
+        String[] keywords = request.getAccommodationKeywords();
+        Place place = null;
+        double latitude;
+        double longitude;
+        // 첫 장소인 경우
+        if(lastPlace == null) {
+            place = getFirstAccommodation(keywords);
+        }
+        else {
+            latitude = lastPlace.getLatitude();
+            longitude = lastPlace.getLongitude();
+            Accommodation accommodation = accommodationRepository.findNearestByKeyword(latitude, longitude, keywords[0]).orElseThrow();
+            place = getPlaceById(accommodation.getId(), TravelType.ACCOMMODATION);
+        }
+        placeList.add(place);
+        return place;
+    }
+
+    private Place getFirstAccommodation(String[] keywords) {
+        List<Accommodation> accommodations = new ArrayList<>();
+
+        if(keywords.length == 0) {
+            List<Accommodation> all = accommodationRepository.findAll();
+            accommodations.addAll(all);
+        }
+        else {
+            for(String keyword : keywords) {
+                List<Accommodation> allByKeyword = accommodationRepository.findByKeyword(keyword);
+                accommodations.addAll(allByKeyword);
+            }
+        }
+        Random random = new Random();
+        int randomIdx = random.nextInt(accommodations.size());
+        return Place.from(accommodations.get(randomIdx));
     }
 
     private Place getPlaceById(Long id, TravelType travelType) {

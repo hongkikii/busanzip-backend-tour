@@ -48,7 +48,9 @@ public class CourseRequest {
 
     // 숙소 관련 요구사항
     // 숙소 요청하는 경우에만 (아닌 경우 빈 문자열)
-    private String[] accommodationRequirements;
+    // [호텔, 모텔, 캠핑, 글램핑, 풀빌라, 펜션, 여관, 리조트, 게스트하우스, 여인숙] 중 복수 선택 가능
+    // 선택 안 한 경우 빈 문자열
+    private String[] accommodationKeywords;
 
     // 교통 수단
     // true -> 차 이용, false -> 대중교통 이용
