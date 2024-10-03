@@ -12,6 +12,12 @@ spring:
     hibernate:
       ddl-auto: update
 
+api:
+  route:
+    car:
+      key-id: ${CAR_ROUTE_API_KEY_ID}
+      key: ${CAR_ROUTE_API_KEY}
+
 #baseurl:
 #  restaurant: http://apis.data.go.kr/6260000/FoodService/getFoodKr?
 #  tourist-attraction: http://apis.data.go.kr/6260000/AttractionService/getAttractionKr?

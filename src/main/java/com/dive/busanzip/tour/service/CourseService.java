@@ -1,5 +1,7 @@
 package com.dive.busanzip.tour.service;
 
+import com.dive.busanzip.tour.dto.course.CarRouteResponse;
+import com.dive.busanzip.tour.dto.course.CarRouteResponse.Route.Traoptimal;
 import com.dive.busanzip.tour.dto.course.CourseResponse;
 import com.dive.busanzip.tour.dto.course.CourseRequest;
 import com.dive.busanzip.tour.dto.course.Place;
@@ -16,11 +18,25 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 @RequiredArgsConstructor
 public class CourseService {
+
+    private final RestTemplate restTemplate;
+    private static final String CAR_ROUTE_API_URL = "https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving";
+    @Value("${api.route.car.key-id}")
+    private String CAR_ROUTE_API_KEY_ID;
+    @Value("${api.route.car.key}")
+    private String CAR_ROUTE_API_KEY;
 
     private final RestaurantRepository restaurantRepository;
     private final ShoppingRepository shoppingRepository;
@@ -34,7 +50,6 @@ public class CourseService {
         Map<Integer, Long> touristAttractionScore = null;
         Map<Integer, Long> experienceScore = null;
 
-        // TODO : 요구사항 빈 경우, 요청 X
         if(request.getEatingCount() > 0) {
             restaurantScore = calculateScore(request.getEatingRequirements(), TravelType.RESTAURANT);
         }
@@ -190,11 +205,25 @@ public class CourseService {
     }
 
     private int getTravelTime(Double startLat, Double startLng, Double endLat, Double endLng, boolean isUsingCar) {
-        // TODO 외부 Api 호출
-        int travelTime = Integer.MIN_VALUE;
+        String start = startLng + "," + startLat;
+        String goal = endLng + "," + endLat;
 
         if(isUsingCar) {
+            String url = UriComponentsBuilder.fromHttpUrl(CAR_ROUTE_API_URL)
+                    .queryParam("start", start)
+                    .queryParam("goal", goal)
+                    .toUriString();
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("X-NCP-APIGW-API-KEY-ID", CAR_ROUTE_API_KEY_ID);
+            headers.set("X-NCP-APIGW-API-KEY", CAR_ROUTE_API_KEY);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<CarRouteResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity, CarRouteResponse.class);
+            long durationMilSec = response.getBody()
+                    .getRoute().getTraoptimal().get(0)
+                    .getSummary().getDuration();
+            return (int) (durationMilSec / 60000);
         }
         else {
 
