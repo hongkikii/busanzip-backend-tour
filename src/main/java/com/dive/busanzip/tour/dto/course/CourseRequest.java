@@ -16,32 +16,32 @@ public class CourseRequest {
 
     // 좋아하는 음식(메뉴)
     // 복수 입력 가능
-    private String[] likeMenus;
+    private String likeMenus;
 
     // 음식 관련 요구사항
     // 음식 먹는 경우에만 (아닌 경우 빈 문자열)
-    private String[] eatingRequirements;
+    private String eatingRequirements;
 
     // 쇼핑 횟수
     private Integer shoppingCount;
 
     // 쇼핑 관련 요구사항
     // 쇼핑 하는 경우에만 (아닌 경우 빈 문자열)
-    private String[] shoppingRequirements;
+    private String shoppingRequirements;
 
     // 명소 방문 횟수
     private Integer touristAttractionCount;
 
     // 명소 관련 요구사항
     // 명소 있는 경우에만 (아닌 경우 빈 문자열)
-    private String[] touristAttractionRequirements;
+    private String touristAttractionRequirements;
 
     // 체험 횟수
     private Integer experienceCount;
 
     // 체험 관련 요구사항
     // 체험 있는 경우에만 (아닌 경우 빈 문자열)
-    private String[] experienceRequirements;
+    private String experienceRequirements;
 
     // 숙소 원하는 횟수
     private Integer accommodationCount;
