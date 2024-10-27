@@ -1,6 +1,5 @@
-package com.dive.busanzip.tour.entity;
+package com.dive.busanzip.tour.dto.data;
 
-import com.dive.busanzip.tour.dto.api.ShoppingData;
 import lombok.Getter;
 
 @Getter

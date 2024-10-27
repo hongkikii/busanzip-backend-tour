@@ -1,4 +1,4 @@
-package com.dive.busanzip.tour.dto.api;
+package com.dive.busanzip.tour.dto.data;
 
 import com.dive.busanzip.tour.entity.Restaurant;
 import com.dive.busanzip.tour.entity.TravelType;

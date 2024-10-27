@@ -6,37 +6,37 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController("/api/v1/data")
 @RequiredArgsConstructor
-public class ApiController {
+public class DataController {
 
     private final ApiService apiService;
 
-    @PostMapping("/api/restaurant")
+    @PostMapping("/restaurant")
     public HttpStatus saveRestaurantData() {
         apiService.saveRestaurant();
         return HttpStatus.OK;
     }
 
-    @PostMapping("/api/tourist-attraction")
+    @PostMapping("/tourist-attraction")
     public HttpStatus saveTouristAttractionData() {
         apiService.saveTouristAttraction();
         return HttpStatus.OK;
     }
 
-    @PostMapping("/api/shopping")
+    @PostMapping("/shopping")
     public HttpStatus saveShoppingData() {
         apiService.saveShopping();
         return HttpStatus.OK;
     }
 
-    @PostMapping("/api/experience")
+    @PostMapping("/experience")
     public HttpStatus saveExperienceData() {
         apiService.saveExperience();
         return HttpStatus.OK;
     }
 
-    @PostMapping("/api/accommodation")
+    @PostMapping("/accommodation")
     public HttpStatus saveAccommodationData() {
         apiService.saveAccommodation();
         return HttpStatus.OK;

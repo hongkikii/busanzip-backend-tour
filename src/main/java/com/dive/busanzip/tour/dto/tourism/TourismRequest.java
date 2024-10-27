@@ -1,11 +1,11 @@
-package com.dive.busanzip.tour.dto.course;
+package com.dive.busanzip.tour.dto.tourism;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class CourseRequest {
+public class TourismRequest {
     // 식당 방문 횟수
     private Integer eatingCount;
 
@@ -15,7 +15,6 @@ public class CourseRequest {
     private String[] eatingTypes;
 
     // 좋아하는 음식(메뉴)
-    // 복수 입력 가능
     private String likeMenus;
 
     // 음식 관련 요구사항
@@ -69,3 +68,4 @@ public class CourseRequest {
      * 요구사항: 인테리어, 음식, 장애 유무, 유아 동반 여부등 ... 자유롭게 작성!
      */
 }
+

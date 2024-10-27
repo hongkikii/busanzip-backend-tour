@@ -1,14 +1,14 @@
 package com.dive.busanzip.tour.service;
 
-import com.dive.busanzip.tour.dto.api.ExperienceData;
-import com.dive.busanzip.tour.dto.api.ExperienceReponse;
-import com.dive.busanzip.tour.dto.api.RestaurantResponse;
-import com.dive.busanzip.tour.dto.api.RestaurantData;
-import com.dive.busanzip.tour.dto.api.ShoppingData;
-import com.dive.busanzip.tour.dto.api.TouristAttractionData;
-import com.dive.busanzip.tour.dto.api.TouristAttractionResponse;
+import com.dive.busanzip.tour.dto.data.ExperienceData;
+import com.dive.busanzip.tour.dto.data.ExperienceReponse;
+import com.dive.busanzip.tour.dto.data.RestaurantResponse;
+import com.dive.busanzip.tour.dto.data.RestaurantData;
+import com.dive.busanzip.tour.dto.data.ShoppingData;
+import com.dive.busanzip.tour.dto.data.TouristAttractionData;
+import com.dive.busanzip.tour.dto.data.TouristAttractionResponse;
 import com.dive.busanzip.tour.entity.Accommodation;
-import com.dive.busanzip.tour.entity.ShoppingResponse;
+import com.dive.busanzip.tour.dto.data.ShoppingResponse;
 import com.dive.busanzip.tour.repository.AccommodationRepository;
 import com.dive.busanzip.tour.repository.ExperienceRepository;
 import com.dive.busanzip.tour.repository.RestaurantRepository;
@@ -19,8 +19,6 @@ import com.opencsv.CSVReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +41,6 @@ public class ApiService {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final AccommodationRepository accommodationRepository;
 
-    // TODO: 외부 api 호출해서 정기 추출
     @Transactional
     public void saveRestaurant() {
         Resource resource = resourceLoader.getResource("classpath:restaurant.json");
@@ -101,7 +98,6 @@ public class ApiService {
         }
     }
 
-    // TODO : 필요없는 컬럼 제거
     @Transactional
     public void saveAccommodation() {
         ClassPathResource resource = new ClassPathResource("accommodation.csv");
@@ -111,34 +107,25 @@ public class ApiService {
 
             for(int i=1; i<csvData.size(); i++) {
                 String[] row = csvData.get(i);
+                if(row[16].equals("")) continue;
                 Accommodation accommodation = Accommodation.create(
-                        row[0],
+                        Long.valueOf(row[0]),
                         row[1],
                         row[2],
                         row[3],
                         row[4],
-                        row[5],
-                        row[6],
+                        Double.parseDouble(row[5]),
+                        Double.parseDouble(row[6]),
                         row[7],
                         row[8],
-                        row[9],
-                        row[10],
-                        row[11],
-                        row[12],
-                        Double.parseDouble(row[13].replaceAll("^\"|\"$", "")),
-                        Double.parseDouble(row[14].replaceAll("^\"|\"$", "")),
+                        "Y".equals(row[9]),
+                        "Y".equals(row[10]),
+                        "Y".equals(row[11]),
+                        "Y".equals(row[12]),
+                        "Y".equals(row[13]),
+                        "Y".equals(row[14]),
                         "Y".equals(row[15]),
-                        row[16],
-                        row[17],
-                        "Y".equals(row[18]),
-                        "Y".equals(row[19]),
-                        row[20],
-                        "Y".equals(row[21]),
-                        "Y".equals(row[22]),
-                        "Y".equals(row[23]),
-                        "Y".equals(row[24]),
-                        "Y".equals(row[25]),
-                        LocalDate.parse(row[26])
+                        row[16]
                 );
                 accommodationRepository.save(accommodation);
             }

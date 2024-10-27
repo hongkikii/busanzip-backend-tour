@@ -1,4 +1,5 @@
-package com.dive.busanzip.tour.dto.course;
+package com.dive.busanzip.tour.dto.tourism;
+
 
 import com.dive.busanzip.tour.entity.Accommodation;
 import com.dive.busanzip.tour.entity.Experience;
@@ -24,12 +25,10 @@ public class Place {
     private String usageDay; // X(NULL): 맛집, 숙박
     private String holiday; // X(NULL): 맛집, 숙박
     private String usageTime; // X(NULL): 숙박
-    private String imageURL; // X(NULL): 숙박
+    private String imageURL;
     private String usagePrice; // X(NULL): 맛집, 숙박
     private String contact;
     private String repMenu; // X(NULL): 쇼핑, 명소, 체험, 숙박
-
-    // TODO : 편의시설 정보 추가
 
     public static Place from(Restaurant restaurant) {
         return Place.builder()
@@ -100,6 +99,7 @@ public class Place {
                 .latitude(accommodation.getLatitude())
                 .longitude(accommodation.getLongitude())
                 .contact(accommodation.getPhoneNumber())
+                .imageURL(accommodation.getImageUrl())
                 .build();
     }
 }

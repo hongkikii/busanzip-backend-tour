@@ -1,4 +1,4 @@
-package com.dive.busanzip.tour.dto.course;
+package com.dive.busanzip.tour.dto.tourism;
 
 import java.util.List;
 import lombok.Getter;
