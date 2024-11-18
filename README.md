@@ -22,6 +22,13 @@
 
 <br>
 
+## Contribution
+- 다양한 유형의 장소(식당, 쇼핑, 관광지, 체험, 숙박)를 포함하는 복합적인 여행 코스를 생성하는 알고리즘을 구현
+- 장소 간 이동 시간을 계산하고, 사용자의 선호도와 최대 이동 시간을 고려하여 최적의 장소를 선택하는 로직을 개발
+- 장소 추천 AI와 연동하여 초기 후보 장소를 받아오고, 필요 시 추가 장소를 포함시켜 추천의 질 향상
+
+<br>
+
 ## Introduce
 <img width="1728" alt="스크린샷 2024-10-27 오후 5 26 10" src="https://github.com/user-attachments/assets/6cb48486-ed47-43bf-b734-fd1b65e33d59">
 <img width="1728" alt="스크린샷 2024-10-27 오후 5 26 29" src="https://github.com/user-attachments/assets/39947118-f87c-4914-a95c-fb381c840a0e">
